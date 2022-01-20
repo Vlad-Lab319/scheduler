@@ -13,6 +13,7 @@ import InterviewerList from "components/InterviewerList";
 import Appointment from "components/Appointment/index";
 import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
+import Show from "components/Appointment/Show";
 
 // Test for button component
 storiesOf("Button", module)
@@ -161,6 +162,14 @@ storiesOf("InterviewerListItem", module)
     ))
     .add("Empty", () => (
       <Empty 
-        onClick={action("onAdd")}
+        onAdd={action("onAdd")}
+      />
+    ))
+    .add("Show", () => (
+      <Show
+        student="Lydia Miller-Jones"
+        interviewer={interviewer}
+        onEdit={action("onEdit")}
+        onDelete={action("onDelete")}
       />
     ))
