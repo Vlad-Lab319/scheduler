@@ -1,4 +1,6 @@
-export function getAppointmentsForDay(state, day) {
+
+const getAppointmentsForDay = function(state, day) {
+// export function getAppointmentsForDay(state, day) {
   const filteredDay = state.days.find(el => el.name === day);
   
   if (!filteredDay) {
@@ -11,4 +13,17 @@ export function getAppointmentsForDay(state, day) {
   // console.log(result);
   return result; 
   // return [{"id": 4, "interview": null, "time": "3pm"}, {"id": 5, "interview": {"interviewer": 2, "student": "Chad Takahashi"}, "time": "4pm"}];
+};
+
+const getInterview = function(state, interview) {
+
+  if (!interview) {
+    return null;
+  }
+
+  const interviewToRender = {...interview, interviewer: state.interviewers[`${interview.interviewer}`]};  
+  console.log(interviewToRender);
+  return interviewToRender;
 }
+
+module.exports = { getAppointmentsForDay, getInterview }
