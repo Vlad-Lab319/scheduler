@@ -92,7 +92,7 @@ export default function Application(props) {
       axios.get('/api/appointments'),
       axios.get('/api/interviewers')
       ]).then(all => {
-        console.log('Fetched data: ', "days", all[0].data, "app", all[1].data, "int", all[2].data);
+        // console.log('Fetched data: ', "days", all[0].data, "app", all[1].data, "int", all[2].data);
         setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
       })
       .catch(err => console.log(err.message)
@@ -125,14 +125,21 @@ export default function Application(props) {
 
       </section>
       <section className="schedule">
-        {/* {state.appointments.map(appointment =>  */}
-        {dailyAppointments.map(appointment => 
-          // const interview = getInterview(state, appointment.interview);
-          <Appointment key={appointment.id} {...appointment} />
-        
+
+          {dailyAppointments.map(appointment => {
+
+            const interviewDetails = getInterview(state, appointment.interview);
+            // console.log("InterviewDetails: ", interviewDetails);
+            // return <Appointment key={appointment.id} {...appointment} />
+            return <Appointment key={appointment.id} id={appointment.id} time={appointment.time} interview={interviewDetails} />
+            
+            })
+
+          }
 
 
-        )}
+
+
       </section>
     </main>
   );
