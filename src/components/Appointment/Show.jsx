@@ -1,11 +1,12 @@
 import React from "react";
 
 export default function Show(props) {
-
+  // console.log("Show: ", props);
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">
         {/* <h2 className="text--regular">{props.student}</h2> */}
+        {/* <h2 className="text--regular">{props.interview.student}</h2> */}
         <h2 className="text--regular">{props.interview.student}</h2>
         <section className="interviewer">
           <h4 className="text--light">Interviewer</h4>
