@@ -33,6 +33,7 @@ export default function Form(props) {
           interviewers={props.interviewers}
           value={interviewer}
           onChange={setInterviewer}
+          interviewer={interviewer}
           selected={props.selected}
         />
       </section>

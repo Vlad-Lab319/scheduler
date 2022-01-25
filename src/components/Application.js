@@ -125,7 +125,7 @@ export default function Application(props) {
           });
 
         })
-        .catch(err => console.log(err.message))
+        // .catch(err => console.log(err.message))
     );
 
   }
@@ -151,7 +151,7 @@ export default function Application(props) {
           });
 
         })
-        .catch(err => console.log(err.message))
+        // .catch(err => console.log(err.message))
     );
 
   }
