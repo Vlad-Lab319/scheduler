@@ -6,6 +6,8 @@ import Empty from "./Empty";
 import useVisualMode from "hooks/useVisualMode";
 import Form from "./Form";
 import Status from "./Status";
+import Confirm from "./Confirm";
+import Error from "./Error";
 
 export default function Appointment(props) {
 
@@ -14,6 +16,10 @@ export default function Appointment(props) {
   const CREATE = "CREATE";
   const SAVING = "SAVING";
   const DELETING = "DELETING";
+  const CONFIRM = "CONFIRM";
+  const EDIT = "EDIT";
+  // const ERROR_SAVE = "ERROR_SAVE";
+  // const ERROR_DELETE = "ERROR_DELETE";
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
@@ -26,7 +32,8 @@ export default function Appointment(props) {
     console.log("Save interview: ", props.id, interview);
     transition(SAVING);
     props.bookInterview(props.id, interview)
-    .then(() => transition(SHOW));
+    .then(() => transition(SHOW))
+    // .catch(err => transition(ERROR_SAVE, true))
   }
 
   function cancel() {
@@ -35,16 +42,8 @@ export default function Appointment(props) {
     transition(DELETING);
     props.cancelInterview(props.id)
     .then(() => transition(EMPTY))
+    // .catch(err => transition(ERROR_DELETE, true))
   }
-  
-
-  // const interviewers = [
-  //   { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
-  //   { id: 2, name: "Tori Malcolm", avatar: "https://i.imgur.com/Nmx0Qxo.png" },
-  //   { id: 3, name: "Mildred Nazir", avatar: "https://i.imgur.com/T2WwVfS.png" },
-  //   { id: 4, name: "Cohana Roy", avatar: "https://i.imgur.com/FK8V841.jpg" },
-  //   { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
-  // ];            //dummy data !!!
 
   return (
     <>
@@ -59,12 +58,17 @@ export default function Appointment(props) {
           <Show
             interview={props.interview}
             // interviewer={props.interview}
-            onDelete={cancel}
+            onDelete={() => transition(CONFIRM)}
+            onEdit={() => transition(EDIT)}
           />
         )}
         {mode === CREATE && <Form interviewers={props.interviewers} onCancel={back} onSave={save} />}
         {mode === SAVING && <Status message="Saving..."/>}
         {mode === DELETING && <Status message="Deleting..."/>}
+        {mode === CONFIRM && <Confirm onCancel={back} onConfirm={cancel}/>}
+        {mode === EDIT && <Form interviewers={props.interviewers} student={props.interview.student} interviewer={props.interview.interviewer} onCancel={back} onSave={save} />}
+        {/* {mode === ERROR_DELETE && <Error message="Error deleting" />} */}
+        {/* {mode === ERROR_SAVE && <Error message="Error saving" />} */}
 
       </article>
     </>
