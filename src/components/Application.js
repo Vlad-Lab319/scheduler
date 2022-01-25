@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import "components/Application.scss";
@@ -72,7 +72,7 @@ export default function Application(props) {
   // const [appointmets, setAppointments] = useState({});
 
 
-  const [state, setState] = useState ({
+  const [state, setState] = useState({
     day: "Monday",
     days: [],
     appointments: {},
@@ -92,55 +92,80 @@ export default function Application(props) {
       axios.get('/api/days'),
       axios.get('/api/appointments'),
       axios.get('/api/interviewers')
-      ]).then(all => {
-        // console.log('Fetched data: ', "days", all[0].data, "app", all[1].data, "int", all[2].data);
-        setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
-      })
+    ]).then(all => {
+      // console.log('Fetched data: ', "days", all[0].data, "app", all[1].data, "int", all[2].data);
+      setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
+    })
       .catch(err => console.log(err.message)
       );
-    }, []);
+  }, []);
 
-    dailyAppointments = getAppointmentsForDay(state, state.day);
-    dayInterviewers = getInterviewersForDay(state, state.day);
+  dailyAppointments = getAppointmentsForDay(state, state.day);
+  dayInterviewers = getInterviewersForDay(state, state.day);
+
+  function bookInterview(id, interview) {
+    // console.log("Booking an interview: ", id, interview);
+    console.log("Int Id: ", id, 'interview: ', interview);
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    // console.log("New appointment: ", appointment);
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
 
     return (
-      <main className="layout">
+
+      axios.put(`api/appointments/${id}`, appointment)
+        .then((res) => {
+          console.log(res);
+          setState({
+            ...state,
+            appointments
+          });
+
+        })
+        .catch(err => console.log(err.message))
+    );
+
+  }
+
+  return (
+    <main className="layout">
       <section className="sidebar">
         <img
           className="sidebar--centered"
           src="images/logo.png"
           alt="Interview Scheduler"
-          />
+        />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           <DayList
             days={state.days}
             value={state.day}
-            onChange={setDay} 
-            />
+            onChange={setDay}
+          />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
           src="images/lhl.png"
           alt="Lighthouse Labs"
-          />
+        />
 
       </section>
       <section className="schedule">
 
-          {dailyAppointments.map(appointment => {
+        {dailyAppointments.map(appointment => {
 
-            const interviewDetails = getInterview(state, appointment.interview);
-            // console.log("InterviewDetails: ", interviewDetails);
-            // return <Appointment key={appointment.id} {...appointment} />
-            return <Appointment key={appointment.id} {...appointment} interview={interviewDetails} interviewers={dayInterviewers}/>
-            
-            })
+          const interviewDetails = getInterview(state, appointment.interview);
+          console.log("InterviewDetails: ", interviewDetails);
+          // return <Appointment key={appointment.id} {...appointment} />
+          return <Appointment key={appointment.id} {...appointment} interview={interviewDetails} interviewers={dayInterviewers} bookInterview={bookInterview} />
 
-          }
-
-
-
+        })}
 
       </section>
     </main>

@@ -67,3 +67,20 @@ export function getInterviewersForDay(state, day) {
   // console.log("RESULT for Instructors: ",interviewersForDay);
   return interviewersForDay;
 };
+
+
+
+// Ratul:
+// export function getAppointmentsForDay(state, day) {
+//   let appointmentsArray = [];
+//   console.log();
+//   for (let key of state.days) {
+//     if(key.name === day) {
+//       appointmentsArray = [...key.appointments];
+//     } 
+//   }
+//   console.log("App Arr: ", appointmentsArray);
+//   const appointmentsOfDay = appointmentsArray.map((id) => state.appointments[id]);
+//   console.log(appointmentsOfDay);
+//   return appointmentsOfDay;
+// }
