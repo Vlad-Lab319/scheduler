@@ -41,6 +41,17 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
+    const getDay = state.days.find(day => day.appointments.includes(id));
+    const days = state.days.map(day => {
+      if (
+        day.name === getDay.name & state.appointments[id].interview === null
+      ) {
+        return { ...day, spots: day.spots - 1 };
+      } else {
+        return day;
+      }
+    });
+
     return (
 
       axios.put(`api/appointments/${id}`, appointment)
@@ -48,7 +59,8 @@ export default function useApplicationData() {
           console.log(res);
           setState({
             ...state,
-            appointments
+            appointments,
+            days
           });
 
         })
@@ -67,6 +79,16 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
+    const getDay = state.days.find(day => day.appointments.includes(id));
+    const days = state.days.map(day => {
+      if (day.name === getDay.name) {
+        return { ...day, spots: day.spots + 1 };
+      } 
+      else {
+        return day;
+      }
+    });
+
     return (
 
       axios.delete(`api/appointments/${id}`, appointment)
@@ -74,7 +96,8 @@ export default function useApplicationData() {
           console.log(res);
           setState({
             ...state,
-            appointments
+            appointments,
+            days
           });
 
         })

@@ -55,7 +55,7 @@ export default function Application(props) {
           return <Appointment key={appointment.id} {...appointment} interview={interviewDetails} interviewers={dayInterviewers} bookInterview={bookInterview} cancelInterview={cancelInterview}/>
 
         })}
-
+          <Appointment key="last" time="5pm" />
       </section>
     </main>
   );
