@@ -11,12 +11,10 @@ function InterviewerList(props) {
       key={interviewer.id}
       name={interviewer.name}
       avatar={interviewer.avatar}
-      selected={interviewer.id === props.value}
+      selected={props.value === interviewer.id}
       setInterviewer={() => props.onChange(interviewer.id)}
     />  
     );
-    
-  // const interviewers = "Some string for test";
 
     return (
       <section className="interviewers">

@@ -51,7 +51,8 @@ export default function Appointment(props) {
 
         <Header time={props.time}/>
 
-        {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
+        {mode === EMPTY && 
+          <Empty onAdd={() => transition(CREATE)} />}
         {mode === SHOW && (
           <Show
             interview={props.interview}
@@ -60,13 +61,30 @@ export default function Appointment(props) {
             onEdit={() => transition(EDIT)}
           />
         )}
-        {mode === CREATE && <Form interviewers={props.interviewers} onCancel={back} onSave={save} />}
-        {mode === SAVING && <Status message="Saving..."/>}
-        {mode === DELETING && <Status message="Deleting..."/>}
-        {mode === CONFIRM && <Confirm onCancel={back} onConfirm={cancel}/>}
-        {mode === EDIT && <Form interviewers={props.interviewers} student={props.interview.student} interviewer={props.interview.interviewer} onCancel={back} onSave={save} />}
-        {mode === ERROR_DELETE && <Error message="Error deleting" onClose={() => transition(SHOW)}/>}
-        {mode === ERROR_SAVE && <Error message="Error saving" onClose={() => transition(SHOW)}/>}
+        {mode === CREATE && 
+          <Form 
+            interviewers={props.interviewers} 
+            onCancel={back} 
+            onSave={save} 
+          />}
+        {mode === SAVING && 
+          <Status message="Saving..."/>}
+        {mode === DELETING && 
+          <Status message="Deleting..."/>}
+        {mode === CONFIRM && 
+          <Confirm onCancel={back} onConfirm={cancel}/>}
+        {mode === EDIT && 
+          <Form 
+            student={props.interview.student} 
+            interviewer={props.interview.interviewer["id"]} 
+            interviewers={props.interviewers} 
+            onCancel={back} 
+            onSave={save} 
+          />}
+        {mode === ERROR_DELETE && 
+          <Error message="Error deleting" onClose={() => transition(SHOW)}/>}
+        {mode === ERROR_SAVE && 
+          <Error message="Error saving" onClose={() => transition(SHOW)}/>}
 
       </article>
     </>
