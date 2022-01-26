@@ -96,7 +96,7 @@ describe("Form", () => {
 
   it("calls onCancel and resets the input field", () => {
     const onCancel = jest.fn();
-    const { getByText, getByPlaceholderText, queryByText, rerender } = render(
+    const { getByText, getByPlaceholderText, queryByText } = render(
       <Form
         interviewers={interviewers}
         name="Lydia Mill-Jones"
@@ -115,7 +115,6 @@ describe("Form", () => {
 
     expect(onCancel).toHaveBeenCalledTimes(1);
     expect(getByPlaceholderText("Enter Student Name")).toHaveValue("");
-    rerender(<Empty />)
     expect(queryByText(/student name cannot be blank/i)).toBeNull();
 
   });
