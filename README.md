@@ -6,9 +6,9 @@ Built using the latest tools and techniques of React, JS, CSS, PostgreSQL, Webpa
 Included different tests types (unit, integration, end-to-end).
 
 ## Screenshots
-!["Scheduler main page"](https://github.com/Vlad-Lab319/scheduler/tree/master/screenshots/scheduler_main.png)
-!["Book interview form"](https://github.com/Vlad-Lab319/scheduler/tree/master/screenshots/scheduler_form.png)
-!["Delete appointment confirmation"](https://github.com/Vlad-Lab319/scheduler/tree/master/screenshots/scheduler_delete.png)
+!["Scheduler main page"](https://github.com/Vlad-Lab319/scheduler/blob/master/screenshots/scheduler_main.png)
+!["Book interview form"](https://github.com/Vlad-Lab319/scheduler/blob/master/screenshots/scheduler_form.png)
+!["Delete appointment confirmation"](https://github.com/Vlad-Lab319/scheduler/blob/master/screenshots/scheduler_delete.png)
 
 ## Project Setup
 - Install scheduler-api from: 
