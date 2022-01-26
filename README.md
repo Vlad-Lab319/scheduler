@@ -52,11 +52,11 @@ npm run storybook
 If you wan to run automated end-to-end tests in the browser: use Cypress. 
 
 npm install --save-dev cypress
-```sh
 
 Run scheduler-api in test mode, then 
 
-npm cypress open -P .
+```sh
+npm run cypress
 ```
 
 ## Dependencies
