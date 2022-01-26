@@ -1,35 +1,30 @@
-import React, {useState} from "react";
+import React from "react";
+// import axios from "axios";
 
 import "components/Application.scss";
 
 import DayList from "./DayList";
+import Appointment from "./Appointment";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
+import useApplicationData from "hooks/useApplicationData";
 
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
 
 
 export default function Application(props) {
-  const [day, setDay] = useState('Monday');
-  
+ 
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview
+  } = useApplicationData();
+
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
+  const dayInterviewers = getInterviewersForDay(state, state.day);
+
   return (
     <main className="layout">
       <section className="sidebar">
-        {/* Replace this with the sidebar elements during the "Project Setup & Familiarity" activity. */}
         <img
           className="sidebar--centered"
           src="images/logo.png"
@@ -38,9 +33,9 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           <DayList
-            days={days}
-            day={day}
-            setDay={setDay}
+            days={state.days}
+            value={state.day}
+            onChange={setDay}
           />
         </nav>
         <img
@@ -51,7 +46,14 @@ export default function Application(props) {
 
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+
+        {dailyAppointments.map(appointment => {
+
+          const interviewDetails = getInterview(state, appointment.interview);
+          return <Appointment key={appointment.id} {...appointment} interview={interviewDetails} interviewers={dayInterviewers} bookInterview={bookInterview} cancelInterview={cancelInterview}/>
+
+        })}
+          <Appointment key="last" time="5pm" />
       </section>
     </main>
   );
