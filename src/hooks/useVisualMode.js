@@ -1,3 +1,5 @@
+// Hook for appointment modes transitions and record of their history.
+
 import { useState } from "react";
 
 export default function useVisualMode(initial) {
@@ -16,9 +18,10 @@ export default function useVisualMode(initial) {
 
   const back = () => {
     if (history.length !== 0) {
-      history.pop();
-      setMode(history[history.length - 1]);
-      setHistory([ ...history ]);
+      const newHistory = [...history];
+      newHistory.pop();
+      setMode(newHistory[newHistory.length - 1]);
+      setHistory([ ...newHistory ]);
     }
   };
   
