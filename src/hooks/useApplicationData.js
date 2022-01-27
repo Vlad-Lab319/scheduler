@@ -4,6 +4,7 @@ import axios from "axios";
 
 export default function useApplicationData() {
 
+//Initial state
 
   const [state, setState] = useState({
     day: "Monday",
@@ -14,6 +15,8 @@ export default function useApplicationData() {
   });
 
   const setDay = day => setState({ ...state, day });
+
+//Fetch data from server
 
   useEffect(() => {
     Promise.all([
@@ -26,6 +29,8 @@ export default function useApplicationData() {
       .catch(err => console.log(err.message)
       );
   }, []);
+
+//Make an appointment
 
   function bookInterview(id, interview) {
 
@@ -53,7 +58,6 @@ export default function useApplicationData() {
 
       axios.put(`api/appointments/${id}`, appointment)
         .then((res) => {
-          console.log(res);
           setState({
             ...state,
             appointments,
@@ -64,6 +68,8 @@ export default function useApplicationData() {
     );
 
   }
+
+//Cancel an appointment
 
   function cancelInterview(id) {
     const appointment = {
@@ -79,7 +85,7 @@ export default function useApplicationData() {
     const days = state.days.map(day => {
       if (day.name === getDay.name) {
         return { ...day, spots: day.spots + 1 };
-      } 
+      }
       else {
         return day;
       }
@@ -89,7 +95,6 @@ export default function useApplicationData() {
 
       axios.delete(`api/appointments/${id}`, appointment)
         .then((res) => {
-          console.log(res);
           setState({
             ...state,
             appointments,
@@ -107,5 +112,5 @@ export default function useApplicationData() {
     bookInterview,
     cancelInterview
   };
-  
+
 };
