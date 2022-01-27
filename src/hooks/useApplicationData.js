@@ -4,6 +4,7 @@ import axios from "axios";
 
 export default function useApplicationData() {
 
+//Initial state
 
   const [state, setState] = useState({
     day: "Monday",
@@ -14,8 +15,8 @@ export default function useApplicationData() {
   });
 
   const setDay = day => setState({ ...state, day });
-  // const setDays = days => setState(prev => ({ ...prev, days }));
 
+//Fetch data from server
 
   useEffect(() => {
     Promise.all([
@@ -23,12 +24,13 @@ export default function useApplicationData() {
       axios.get('/api/appointments'),
       axios.get('/api/interviewers')
     ]).then(all => {
-      // console.log('Fetched data: ', "days", all[0].data, "app", all[1].data, "int", all[2].data);
       setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
     })
       .catch(err => console.log(err.message)
       );
   }, []);
+
+//Make an appointment
 
   function bookInterview(id, interview) {
 
@@ -56,7 +58,6 @@ export default function useApplicationData() {
 
       axios.put(`api/appointments/${id}`, appointment)
         .then((res) => {
-          console.log(res);
           setState({
             ...state,
             appointments,
@@ -64,10 +65,11 @@ export default function useApplicationData() {
           });
 
         })
-        // .catch(err => console.log(err.message))
     );
 
   }
+
+//Cancel an appointment
 
   function cancelInterview(id) {
     const appointment = {
@@ -83,7 +85,7 @@ export default function useApplicationData() {
     const days = state.days.map(day => {
       if (day.name === getDay.name) {
         return { ...day, spots: day.spots + 1 };
-      } 
+      }
       else {
         return day;
       }
@@ -93,7 +95,6 @@ export default function useApplicationData() {
 
       axios.delete(`api/appointments/${id}`, appointment)
         .then((res) => {
-          console.log(res);
           setState({
             ...state,
             appointments,
@@ -101,7 +102,6 @@ export default function useApplicationData() {
           });
 
         })
-        // .catch(err => console.log(err.message))
     );
 
   }
@@ -112,5 +112,5 @@ export default function useApplicationData() {
     bookInterview,
     cancelInterview
   };
-  
+
 };
